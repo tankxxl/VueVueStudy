@@ -64,7 +64,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .moduleSwiper {
   height: 300px;
 }

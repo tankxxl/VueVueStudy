@@ -1,13 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import axios from 'axios'
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
+
+
+// import axios from 'axios'
+// Vue.prototype.$http = axios
 // axios.defaults.baseURL = 'https://api.example.com';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
 // axios.defaults.headers.common['Access-Control'] = '*';
-Vue.prototype.$http = axios
+
 
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
@@ -24,7 +29,6 @@ Vue.use(AwesomeSwiper)
 
 import * as filters from './filters'
 
-import store from './store'
 
 import App from './App'
 
@@ -91,6 +95,7 @@ import {toast} from './utils/util'
 
 const routes = [
   {
+    name: 'home',
     path: '/',
     component: Home
   },
@@ -155,11 +160,19 @@ const routes = [
         component: UserPosts
       }
     ]
-  }
+  },
+    {
+      name: 'notFound',
+        path: '*',
+        component: require('./views/not_found/not_found.vue')
+    }
 ]
 
+import routerConfig from './router/router'
+
 const router = new VueRouter({
-  routes  // routes: routes
+  // routes: routes  // routes: routes
+    routes: routerConfig
 })
 
 router.beforeEach( (to, from, next) => {
@@ -210,6 +223,8 @@ Object.keys(filters1).forEach(key => Vue.filter(key, filters1[key]))
 
 
 
+// import store from './store'
+import store from './vuex/index'
 
 /* eslint-disable no-new */
 // el: '#app',
@@ -222,7 +237,7 @@ new Vue({
   store,
   el: '#app',
   template: '<App/>',
-components: { App }
+  components: { App }
 
 })
 

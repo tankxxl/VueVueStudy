@@ -4,9 +4,9 @@
        <!-- banner slider -->
       <swiper :options="bannerSwiperOption" class="bannerSwiper">
         <swiper-slide v-for="slide in banners">
-          <!-- <h2> {{ slide.title }} </h2> -->
-          <!-- <h4> {{ slide.desc }} </h4> -->
-          <img :src='slide.img' />
+            <div class="bannerSlide">
+                <img :src='slide.img' class="img"/>
+            </div>
         </swiper-slide>
         <!-- ... -->
         <!-- 以下配置均为可选（使用具名slot来确定并应用一些操作控件元素） -->
@@ -20,7 +20,8 @@
       <swiper :options="moduleSwiperOption" class="moduleSwiper">
         <swiper-slide v-for="(slide, $index) in modules"
           :class="{ 'is-active': $index === moduleIndex }">
-          <div class="navpic1">
+          <div class="moduleSlide">
+              <img :src="slide.img" />
             <a href="#">{{ slide.title }}</a>
           </div>
         </swiper-slide>
@@ -29,9 +30,9 @@
       <!-- special slider -->
       <swiper :options="specialSwiperOption" class="specialSwiper">
         <swiper-slide v-for="slide in specials">
-          <div class="special1">
+          <div class="specialSlide">
             <!-- <a href="#">{{ slide.title }}</a> -->
-            <img :src='slide.img' />
+            <img :src='slide.img' class="img"/>
           </div>
         </swiper-slide>
       </swiper>
@@ -86,69 +87,6 @@ export default {
         {title:'结婚专题', desc: 'desc 2', img: require('../assets/zhuanti2.png'), url: 'url2'}
       ],
 
-      specialSwiperOption: {
-        // 如果你后续需要找到当前实例化后的swiper对象以对其进行一些操作的话，可以自定义配置一个名字
-        name: 'specialSwiper',
-        // 所有配置均为可选（同Swiper配置）
-        // autoplay: 3000,
-        direction : 'horizontal',
-        grabCursor : true,
-        setWrapperSize :true,
-        // autoHeight: true,
-        spaceBetween: 15,
-        // 多列
-        slidesPerView: 2,
-        // 多行
-        // slidesPerColumn: 2,
-        mousewheelControl : true,
-        observeParents:true,
-        onClick: (swiper, event) => {
-          console.log('=specialSwiper-onClick...activeIndex:' + swiper.activeIndex)
-          // this.moduleIndex = swiper.activeIndex
-        }
-      },
-
-      moduleSwiperOption: {
-        // 如果你后续需要找到当前实例化后的swiper对象以对其进行一些操作的话，可以自定义配置一个名字
-        name: 'moduleSwiper',
-        // 所有配置均为可选（同Swiper配置）
-        // autoplay: 3000,
-        direction : 'horizontal',
-        grabCursor : true,
-        setWrapperSize :true,
-        // autoHeight: true,
-        spaceBetween: 30,
-        slidesPerView: 6,
-        // pagination : '.swiper-pagination',
-        // paginationClickable :true,
-        // prevButton:'.swiper-button-prev',
-        // nextButton:'.swiper-button-next',
-        // scrollbar:'.swiper-scrollbar',
-        mousewheelControl : true,
-        observeParents:true,
-        // if you need use plugins in the swiper, you can config in here like this
-        debugger: true,
-        // swiper callbacks
-        onTransitionStart: function(swiper){
-          // console.log(swiper)
-          console.log('onTransitionStart...')
-        }
-        ,
-        onClick: (swiper, event) => {
-          console.log(swiper.activeIndex)
-          console.log('=moduleSwiper-onClick...activeIndex:' + swiper.activeIndex)
-          this.moduleIndex = swiper.activeIndex
-        }
-
-        // onClick: function(swiper, event) {
-        //   console.log('ModuleSwiper-onClick...activeIndex:' + swiper.activeIndex)
-        //   this.moduleIndex = swiper.activeIndex
-        // }
-        // onClick: this.$vm.onSwiperClicked
-        // more Swiper config ...
-        // ...
-      },
-
       bannerSwiperOption: {
         // 如果你后续需要找到当前实例化后的swiper对象以对其进行一些操作的话，可以自定义配置一个名字
         name: 'bannerSwiper',
@@ -163,7 +101,7 @@ export default {
         // prevButton:'.swiper-button-prev',
         // nextButton:'.swiper-button-next',
         // scrollbar:'.swiper-scrollbar',
-        mousewheelControl : true,
+        mousewheelControl : false,
         observeParents:true,
         // if you need use plugins in the swiper, you can config in here like this
         debugger: true,
@@ -177,33 +115,87 @@ export default {
           console.log('bannerSwiper-onClick...activeIndex:' + swiper.activeIndex)
           // this.moduleIndex = swiper.activeIndex
         }
-        // onClick: function(swiper, event) {
-          // console.log('ModuleSwiper-onClick...activeIndex:' + swiper.activeIndex)
-          // moduleIndex = swiper.activeIndex
-        // }
-        // onClick: this.onSwiperClicked
         // more Swiper config ...
         // ...
       },
 
-      list: [{
+        moduleSwiperOption: {
+            // 如果你后续需要找到当前实例化后的swiper对象以对其进行一些操作的话，可以自定义配置一个名字
+            name: 'moduleSwiper',
+            // 所有配置均为可选（同Swiper配置）
+            // autoplay: 3000,
+            direction : 'horizontal',
+            grabCursor : true,
+//            setWrapperSize :true,
+//             autoHeight: true,
+            spaceBetween: 30,
+            slidesPerView: 6,
+            // pagination : '.swiper-pagination',
+            // paginationClickable :true,
+            // prevButton:'.swiper-button-prev',
+            // nextButton:'.swiper-button-next',
+            // scrollbar:'.swiper-scrollbar',
+            mousewheelControl : false,
+            observeParents:true,
+            // if you need use plugins in the swiper, you can config in here like this
+            debugger: true,
+            // swiper callbacks
+            onTransitionStart: function(swiper){
+//              此函数是moduleSwiperOption对象的一个函数，所以此函数内的this为moduleSwiperOption对象，
+//              而不是Vue模块对象，所以用this取不到data中的值
+                // console.log(swiper)
+                console.log('onTransitionStart...')
+            },
+            onClick: (swiper, event) => {
+                console.log(swiper.activeIndex)
+                console.log('=moduleSwiper-onClick...activeIndex:' + swiper.activeIndex)
+                console.log('Swiper-onClick.current Page activeItemIndex:', swiper.clickedIndex)
+                this.moduleIndex = swiper.clickedIndex
+            }
+            // more Swiper config ...
+            // ...
+        },
+
+        specialSwiperOption: {
+            // 如果你后续需要找到当前实例化后的swiper对象以对其进行一些操作的话，可以自定义配置一个名字
+            name: 'specialSwiper',
+            // 所有配置均为可选（同Swiper配置）
+            // autoplay: 3000,
+            direction : 'horizontal',
+            grabCursor : true,
+            setWrapperSize :true,
+            // autoHeight: true,
+            spaceBetween: 15,
+            // 多列
+            slidesPerView: 2,
+            // 多行
+            // slidesPerColumn: 2,
+            mousewheelControl : false,
+            observeParents:true,
+            onClick: (swiper, event) => {
+                console.log('=specialSwiper-onClick...activeIndex:' + swiper.activeIndex)
+                // this.moduleIndex = swiper.activeIndex
+            }
+        },
+
+        list: [{
         image: require('../assets/cake1.jpg'),
         title: '缤纷盛果蛋糕',
         author: 'Myron'
       }, {
-        image: require('../assets/cake1.jpg'),
+        image: require('../assets/cake2.jpg'),
         title: '华尔兹蛋糕',
         author: 'Waltz Almond'
       }, {
-        image: require('../assets/cake1.jpg'),
+        image: require('../assets/cake3.jpg'),
         title: '俏皮萌宝蛋糕',
         author: 'Cute Bears'
       }, {
-        image: require('../assets/cake1.jpg'),
+        image: require('../assets/cake4.jpg'),
         title: '聚福蛋糕',
         author: 'Good Fortune'
       }, {
-        image: require('../assets/cake1.jpg'),
+        image: require('../assets/cake5.jpg'),
         title: '经典黑森林蛋糕',
         author: 'Black Forest'
       }, {
@@ -211,11 +203,11 @@ export default {
         title: '白色恋人蛋糕 White Love',
         author: 'mokayi'
       }, {
-        image: require('../assets/cake1.jpg'),
+        image: require('../assets/cake2.jpg'),
         title: '富贵天喜蛋糕 Riches&Honour',
         author: 'NUyyyyyyy'
       }, {
-        image: require('../assets/cake1.jpg'),
+        image: require('../assets/cake3.jpg'),
         title: '提拉米苏蛋糕 Tiramisu Mousse',
         author: 'TDDyyyyyyy'
       }]
@@ -239,11 +231,9 @@ export default {
     // this.bannerSwiper.onClick = this.onSwiperClicked
     this.bannerSwiper.slideTo(0, 1000, false)
     console.log('moduleSwiper1=', this.moduleSwiper)
-    // this.moduleSwiper.onClick = this.onSwiperClicked
-    // this.bannerSwiper.onClick = this.onSwiperClicked
     console.log('moduleSwiper2=', this.moduleSwiper)
     // http request
-    this.fetchData()
+//    this.fetchData()
 
   },
 
@@ -275,16 +265,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 .bannerSwiper {
   height: 300px;
 }
+
 .moduleSwiper {
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
-  height: 70px;
+  height: 80px;
 }
 .specialSwiper {
   margin-left: 10px;
@@ -292,21 +284,26 @@ export default {
   height: 150px;
 }
 
-.navpic1 {
-  background:url(../assets/nav3.1.png) center top no-repeat;
-  height: 70px;
+.bannerSlide {
+    text-align: center;
 }
 
-.special1 {
+.moduleSlide {
+  /*background:url(../assets/nav3.1.png) center top no-repeat;*/
+  text-align: center;
+}
+
+.specialSlide {
   /*background:url(../assets/cake1.jpg) center top no-repeat;*/
-  height: 70px;
+    text-align: center;
 }
 
-.navpic1 a {
-  /*left: 50%;*/
-  /*top: 100%;*/
-  /*vertical-align:middle;*/
+.img {
+    /*width: 100%;*/
+    /*height: 100%;*/
+    vertical-align:middle;
 }
+
 
 
 .hlist_tit{
@@ -331,14 +328,15 @@ export default {
 
 .is-active {
   font-style: italic;
+    /*color: #00F;*/
   /*font-size: 23px;*/
 }
 
 
 .gridlist-demo {
   /*width: 500px;*/
-  height: 450px;
-  overflow-y: auto;
+  /*height: 450px;*/
+  /*overflow-y: auto;*/
 }
 
 

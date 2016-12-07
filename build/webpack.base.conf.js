@@ -15,11 +15,12 @@ module.exports = {
     app: './src/main.js'
   },
   output: {
-    path: config.build.assetsRoot,
-    publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
+    path: config.build.assetsRoot, // This is where images AND js will go
+    publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath, // This is used to generate URLs to e.g. images
     filename: '[name].js'
   },
   resolve: {
+    // you can now require('file') instead of require('file.js')
     extensions: ['', '.js', '.vue'],
     fallback: [path.join(__dirname, '../node_modules')],
     alias: {
@@ -46,7 +47,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loader: "style-loader!css-loader!less-loader"
+        loader: "style-loader!css-loader!less-loader"  // use ! to chain loaders
       },
       {
         test: /\.json$/,
